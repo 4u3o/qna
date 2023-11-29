@@ -5,4 +5,8 @@ FactoryBot.define do
     body { 'MyText' }
     question
   end
+
+  trait :invalid do
+    body { nil }
+  end
 end

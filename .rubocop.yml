@@ -28,6 +28,9 @@ Style/IfUnlessModifier:
 Layout/LineLength:
   Enabled: false
 
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
 Metrics/AbcSize:
   Enabled: false
 
