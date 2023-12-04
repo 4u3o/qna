@@ -4,20 +4,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
-
-  describe 'GET #new' do
-    before { get :new, params: {question_id: question} }
-
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer).with(question_id: question.id)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  let(:user) { create(:user)}
 
   describe 'POST #create' do
+    before { sign_in(user) }
     context 'with valid attributes' do
       it 'creates a new answer' do
         expect { post :create, params: {question_id: question, answer: attributes_for(:answer)} }.to change(Answer, :count).by(1)
@@ -41,10 +31,10 @@ RSpec.describe AnswersController, type: :controller do
         end.not_to change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 'renders question/show template' do
         post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}
 
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  sequence(:title) { |n| "My title #{n}" }
+
   factory :question do
-    title { 'MyString' }
+    title
     body { 'MyText' }
+    author
 
     trait :invalid do
       title { nil }

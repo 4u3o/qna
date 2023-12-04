@@ -1,0 +1,6 @@
+ru:
+  questions:
+    create:
+      success: "Вопрос успешно создан."
+    show:
+      answer: "Ответить"

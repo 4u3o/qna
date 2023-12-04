@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
@@ -26,12 +27,17 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq(question)
     end
 
+    it 'assigns the requested answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer).with(question_id: question.id)
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end
   end
 
   describe 'GET #new' do
+    before { login(user) }
     before { get :new }
 
     it 'assigns the requested question to @question' do
@@ -44,6 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    before { login(user) }
     before { get :edit, params: {id: question} }
 
     it 'assigns the requested question to @question' do
@@ -56,6 +63,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'creates a new question' do
         expect { post :create, params: {question: attributes_for(:question)} }.to change(Question, :count).by(1)
@@ -82,6 +91,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: {id: question, question: attributes_for(:question)}
@@ -106,10 +117,13 @@ RSpec.describe QuestionsController, type: :controller do
       before { patch :update, params: {id: question, question: attributes_for(:question, :invalid)} }
 
       it 'does not change question' do
+        title_before = question.title
+        body_before = question.body
+
         question.reload
 
-        expect(question.title).to eq('MyString')
-        expect(question.body).to eq('MyText')
+        expect(question.title).to eq(title_before)
+        expect(question.body).to eq(body_before)
       end
 
       it 're-renders edit view' do
@@ -119,6 +133,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    before { login(user) }
     let!(:question) { create(:question) }
 
     it 'delete the question' do
