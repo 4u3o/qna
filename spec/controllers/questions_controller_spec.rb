@@ -96,7 +96,6 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: {question: attributes_for(:question)} }.not_to change(Question, :count)
       end
     end
-
   end
 
   describe 'PATCH #update' do

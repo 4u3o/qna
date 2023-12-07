@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
 
-    if current_user.is_author?(@answer)
+    if current_user.author?(@answer)
       @answer.destroy
 
       flash[:notice] = t('.delete.success')

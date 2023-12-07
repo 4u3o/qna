@@ -6,7 +6,7 @@ feature 'Answer deleting' do
   given!(:answer_author) { create(:user) }
   given!(:question_author) { create(:user) }
   given!(:question) { create(:question, author: question_author) }
-  given!(:answer) { create(:answer, question:, author: answer_author)}
+  given!(:answer) { create(:answer, question:, author: answer_author) }
 
   context "when user is an answer's author" do
     background { sign_in(answer_author) }

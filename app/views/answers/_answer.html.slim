@@ -1,5 +1,5 @@
 - if answer.persisted?
   p= answer.body
 
-  - if current_user&.is_author?(answer)
+  - if current_user&.author?(answer)
     = link_to t('.delete'), answer_path(answer), method: :delete
