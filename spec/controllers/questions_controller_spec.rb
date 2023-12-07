@@ -63,31 +63,40 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    before { login(user) }
+    context 'when user is authenticated' do
+      before { login(user) }
 
-    context 'with valid attributes' do
-      it 'creates a new question' do
-        expect { post :create, params: {question: attributes_for(:question)} }.to change(Question, :count).by(1)
+      context 'with valid attributes' do
+        it 'creates a new question' do
+          expect { post :create, params: {question: attributes_for(:question)} }.to change(Question, :count).by(1)
+        end
+
+        it 'redirects to show view' do
+          post :create, params: {question: attributes_for(:question)}
+
+          expect(response).to redirect_to assigns(:question)
+        end
       end
 
-      it 'redirects to show view' do
-        post :create, params: {question: attributes_for(:question)}
+      context 'with invalid attributes' do
+        it 'does not save the question' do
+          expect { post :create, params: {question: attributes_for(:question, :invalid)} }.not_to change(Question, :count)
+        end
 
-        expect(response).to redirect_to assigns(:question)
+        it 're-renders new view' do
+          post :create, params: {question: attributes_for(:question, :invalid)}
+
+          expect(response).to render_template :new
+        end
       end
     end
 
-    context 'with invalid attributes' do
+    context 'when user is not authenticated' do
       it 'does not save the question' do
-        expect { post :create, params: {question: attributes_for(:question, :invalid)} }.not_to change(Question, :count)
-      end
-
-      it 're-renders new view' do
-        post :create, params: {question: attributes_for(:question, :invalid)}
-
-        expect(response).to render_template :new
+        expect { post :create, params: {question: attributes_for(:question)} }.not_to change(Question, :count)
       end
     end
+
   end
 
   describe 'PATCH #update' do
@@ -133,17 +142,30 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
-    let!(:question) { create(:question) }
+    let!(:question) { create(:question, author: user) }
 
-    it 'delete the question' do
-      expect { delete :destroy, params: {id: question} }.to change(Question, :count).by(-1)
+    context "when user is a question's author" do
+      before { login(user) }
+
+      it 'delete the question' do
+        expect { delete :destroy, params: {id: question} }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, params: {id: question}
+
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index' do
-      delete :destroy, params: {id: question}
+    context "when user is not a question's author" do
+      let(:not_author) { create(:user) }
 
-      expect(response).to redirect_to questions_path
+      before { login(not_author) }
+
+      it 'not delete the question' do
+        expect { delete :destroy, params: {id: question} }.not_to change(Question, :count)
+      end
     end
   end
 end

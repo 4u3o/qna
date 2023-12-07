@@ -2,3 +2,9 @@ en:
   answers:
     create:
       success: "Answer was successfully created"
+    answer:
+      delete: "Delete answer"
+    destroy:
+      delete:
+        success: "Answer was successfully deleted."
+        fail: "You are not an answer's author."

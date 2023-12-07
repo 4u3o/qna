@@ -14,6 +14,20 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer = Answer.find(params[:id])
+
+    if current_user.is_author?(@answer)
+      @answer.destroy
+
+      flash[:notice] = t('.delete.success')
+    else
+      flash[:alert] = t('.delete.fail')
+    end
+
+    redirect_to @answer.question
+  end
+
   private
 
   def answer_params

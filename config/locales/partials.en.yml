@@ -1,0 +1,5 @@
+en:
+  partials:
+    nav:
+      log_out: "Log out"
+      log_in: "Log in"

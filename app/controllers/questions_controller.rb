@@ -37,7 +37,13 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
+    if current_user.is_author?(@question)
+      @question.destroy
+
+      flash[:notice] = t('.delete.success')
+    else
+      flash[:alert] = t('.delete.fail.not_author')
+    end
 
     redirect_to questions_path
   end

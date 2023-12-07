@@ -3,6 +3,9 @@
 h1= @question.title
 p= @question.body
 
+- if current_user&.is_author?(@question)
+  = link_to t('.delete_button'), question_path(@question), method: :delete
+
 - if user_signed_in?
   = form_with model: [@question, @answer] do |f|
     = f.label :body

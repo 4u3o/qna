@@ -2,3 +2,9 @@ ru:
   answers:
     create:
       success: "Ответ успешно создан"
+    answer:
+      delete: "Удалить ответ"
+    destroy:
+      delete:
+        success: "Ответ был успешно удален."
+        fail: "Вы не автор ответа."

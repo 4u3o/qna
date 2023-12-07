@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'User can create answer' do
+feature 'Creating answer for question' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
@@ -15,13 +15,13 @@ feature 'User can create answer' do
 
     scenario 'he writes an answer' do
       fill_in 'Body', with: 'My answer'
-      click_on 'Answer'
+      click_button answer
 
       expect(page).to have_content 'My answer'
     end
 
     scenario 'he sends empty body' do
-      click_on 'Answer'
+      click_button answer
 
       expect(page).to have_content "Body can't be blank"
     end
@@ -31,7 +31,13 @@ feature 'User can create answer' do
     scenario "he can not see a answer's form" do
       visit question_path(question)
 
-      expect(page).to_not have_xpath '//input[@value="Answer"]'
+      expect(page).not_to have_button answer
     end
+  end
+
+  private
+
+  def answer
+    I18n.t('questions.show.answer')
   end
 end

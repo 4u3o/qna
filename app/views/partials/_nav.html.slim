@@ -1,0 +1,6 @@
+.container
+  ul
+    - if user_signed_in?
+      li= link_to t('.log_out'), destroy_user_session_path, method: :delete
+    - else
+      li= link_to t('.log_in'), new_user_session_path
