@@ -3,21 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:user) { create(:user) }
   let(:question) { create(:question) }
 
-  describe 'GET #new' do
-    before { get :new, params: {question_id: question} }
-
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer).with(question_id: question.id)
-    end
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
-
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'creates a new answer' do
         expect { post :create, params: {question_id: question, answer: attributes_for(:answer)} }.to change(Answer, :count).by(1)
@@ -41,10 +32,39 @@ RSpec.describe AnswersController, type: :controller do
         end.not_to change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 'renders question/show template' do
         post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}
 
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let(:author) { create(:user) }
+    let!(:answer) { create(:answer, author:, question:) }
+
+    context "when user is a answer's author" do
+      before { login(author) }
+
+      it 'delete the answer' do
+        expect { delete :destroy, params: {id: answer} }.to change(Answer, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, params: {id: answer}
+
+        expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    context "when user is not a answer's author" do
+      let(:not_author) { create(:user) }
+
+      before { login(not_author) }
+
+      it 'not delete the answer' do
+        expect { delete :destroy, params: {id: answer} }.not_to change(Answer, :count)
       end
     end
   end

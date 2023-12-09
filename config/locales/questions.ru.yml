@@ -1,0 +1,12 @@
+ru:
+  questions:
+    create:
+      success: "Вопрос успешно создан."
+    show:
+      answer: "Ответить"
+      delete_button: "Удалить вопрос"
+    destroy:
+      delete:
+        success: "Вопрос был успешно удален."
+        fail:
+          not_author: "Вы не автор этого вопроса."

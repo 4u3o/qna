@@ -1,28 +1,34 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :set_question, only: %i[new create]
-
-  def new
-    # не уверен что этот экшен понадобиться, скорее всего форма будет на странице вопроса
-    @answer = @question.answers.create
-  end
+  before_action :authenticate_user!
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.create(answer_params.merge(author: current_user))
 
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: t('.success')
     else
-      render :new
+      render template: 'questions/show'
     end
   end
 
-  private
+  def destroy
+    @answer = Answer.find(params[:id])
 
-  def set_question
-    @question = Question.find(params[:question_id])
+    if current_user.author?(@answer)
+      @answer.destroy
+
+      flash[:notice] = t('.delete.success')
+    else
+      flash[:alert] = t('.delete.fail')
+    end
+
+    redirect_to @answer.question
   end
+
+  private
 
   def answer_params
     params.require(:answer).permit(:body)

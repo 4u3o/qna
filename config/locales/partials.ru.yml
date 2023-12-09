@@ -1,0 +1,5 @@
+partials.ru:
+  partials:
+    nav:
+      log_out: "Выйти"
+      log_in: "Войти"

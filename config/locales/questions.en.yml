@@ -1,0 +1,10 @@
+en:
+  questions:
+    show:
+      answer: "Answer"
+      delete_button: "Delete question"
+    destroy:
+      delete:
+        success: "Question was successfully deleted."
+        fail:
+          not_author: "You are not an author."
