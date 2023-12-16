@@ -13,11 +13,14 @@ feature 'Creating answer for question' do
       visit question_path(question)
     end
 
-    scenario 'he writes an answer' do
+    scenario 'he writes an answer', js: true do
       fill_in 'Body', with: 'My answer'
       click_button answer
 
-      expect(page).to have_content 'My answer'
+      expect(page).to have_current_path(question_path(question))
+      within '.answers' do
+        expect(page).to have_content 'My answer'
+      end
     end
 
     scenario 'he sends empty body' do

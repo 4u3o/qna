@@ -1,0 +1,7 @@
+$('.answer-errors').html('<%= render 'partials/errors', resource: @answer %>');
+$('.flash').empty().html('<%= render 'partials/flash' %>')
+
+<% if @answer.persisted? %>
+  $('.answers').append('<%= j render @answer %>');
+  $('.new-answer #answer_body').val('');
+<% end %>
