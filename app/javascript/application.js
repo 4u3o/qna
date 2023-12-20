@@ -10,4 +10,5 @@ import "./add_jquery"
 Rails.start();
 Turbolinks.start();
 
+import "./questions"
 import "./answers"

@@ -11,7 +11,7 @@ feature 'Answer deleting' do
   context "when user is an answer's author" do
     background { sign_in(answer_author) }
 
-    scenario 'he deletes an answer' do
+    scenario 'he deletes an answer', js: true do
       visit question_path(question)
 
       click_link delete_answer

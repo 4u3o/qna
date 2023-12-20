@@ -4,6 +4,8 @@ en:
       success: "Answer was successfully created"
     answer:
       delete: "Delete answer"
+      save: "Save"
+      edit: "Edit"
     destroy:
       delete:
         success: "Answer was successfully deleted."

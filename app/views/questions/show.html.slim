@@ -1,18 +1,22 @@
-= render 'partials/errors', resource: @answer
+== render 'partials/errors', resource: @answer
 
-h1= @question.title
-p= @question.body
+.question
+  == render @question
 
-- if current_user&.author?(@question)
-  = link_to t('.delete_button'), question_path(@question), method: :delete
+= form_with model: @question, class: 'hidden edit-question-form', local: false do |f|
+  .question-errors
+  = f.label :title
+  = f.text_field :title
+  = f.label :body
+  = f.text_area :body
+  = f.submit
 
 - if user_signed_in?
   .answer-errors
-
   = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
     = f.label :body
     = f.text_area :body
     = f.submit t('.answer')
 
 .answers
-    == render @question.answers
+  == render @question.answers

@@ -2,9 +2,13 @@ en:
   questions:
     show:
       answer: "Answer"
+    question:
       delete_button: "Delete question"
+      edit: "Edit question"
     destroy:
       delete:
         success: "Question was successfully deleted."
         fail:
           not_author: "You are not an author."
+    update:
+      success: "Your question was successfully updated"

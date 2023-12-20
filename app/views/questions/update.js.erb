@@ -1,0 +1,7 @@
+$('.question-errors').html('<%= render 'partials/errors', resource: @question %>');
+$('.flash').empty().html('<%= render 'partials/flash' %>')
+
+<% if @question.errors.empty? %>
+  $('.question').html('<%= j render @question %>').toggleClass('hidden');
+  $('.edit-question-form').toggleClass('hidden');
+<% end %>
