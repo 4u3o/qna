@@ -9,7 +9,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.new
+    @new_answer = @question.answers.new
+    @answers = @question.answers.order(:created_at)
   end
 
   def new
@@ -29,18 +30,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
-      flash.now[:success] = t('.success')
-    end
+    @question.update(question_params) if current_user.author?(@question)
   end
 
   def destroy
     if current_user.author?(@question)
       @question.destroy
 
-      flash[:notice] = t('.delete.success')
+      flash[:notice] = t('.success')
     else
-      flash[:alert] = t('.delete.fail.not_author')
+      flash[:alert] = t('.fail.not_author')
     end
 
     redirect_to questions_path

@@ -15,7 +15,7 @@ feature 'Question deleting' do
 
       click_link delete_question
 
-      expect(page).to have_content 'Question was successfully deleted.'
+      expect(page).to have_content question_success_deleted
     end
   end
 
@@ -32,6 +32,10 @@ feature 'Question deleting' do
   private
 
   def delete_question
-    I18n.t('questions.show.delete_button')
+    I18n.t('questions.question.delete')
+  end
+
+  def question_success_deleted
+    I18n.t('questions.destroy.success')
   end
 end

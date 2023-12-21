@@ -1,5 +1,6 @@
 - if answer.persisted?
   p= answer.body
+  p= t('.answered', at: dt_format(answer.created_at))
 
   - if current_user&.author?(answer)
     = link_to t('.delete'), answer_path(answer),  method:  :delete, remote: true

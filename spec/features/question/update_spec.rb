@@ -20,7 +20,6 @@ feature "Question updating" do
         click_button save_question
 
         expect(page).to have_content 'Updated question'
-        expect(page).to have_content 'Your question was successfully updated'
       end
     end
 
@@ -44,7 +43,7 @@ feature "Question updating" do
   private
 
   def edit_question
-    "Edit question"
+    I18n.t('questions.question.edit')
   end
 
   def save_question

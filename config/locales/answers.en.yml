@@ -6,6 +6,7 @@ en:
       delete: "Delete answer"
       save: "Save"
       edit: "Edit"
+      answered: "answered %{at}"
     destroy:
       delete:
         success: "Answer was successfully deleted."

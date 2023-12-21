@@ -6,6 +6,7 @@ ru:
       delete: "Удалить ответ"
       save: "Сохранить"
       edit: "Изменить"
+      answered: "отвечен %{at}"
     destroy:
       delete:
         success: "Ответ был успешно удален."
