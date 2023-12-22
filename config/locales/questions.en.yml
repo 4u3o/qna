@@ -2,6 +2,7 @@ en:
   questions:
     show:
       answer: "Answer"
+      question_update: "Update Question"
     question:
       delete: "Delete question"
       edit: "Edit question"
@@ -11,3 +12,5 @@ en:
         not_author: "You are not an author."
     update:
       success: "Your question was successfully updated"
+    new:
+      ask: "Ask"

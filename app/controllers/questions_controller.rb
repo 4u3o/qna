@@ -9,8 +9,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @new_answer = @question.answers.new
-    @answers = @question.answers.order(:created_at)
+    @answer = @question.answers.new
+    @answers = @question.answers.sort_by_best
   end
 
   def new

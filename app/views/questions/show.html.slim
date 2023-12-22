@@ -3,11 +3,11 @@
 .question
   == render @question
 
-== render 'form', question: @question, form_class: 'hidden edit-question-form', local: false
+== render 'form', question: @question, form_class: 'hidden edit-question-form', local: false, button_name: t('.question_update')
 
 - if user_signed_in?
   .answer-errors
-  = form_with model: [@question, @new_answer], class: 'new-answer', local: false do |f|
+  = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
     = f.label :body
     = f.text_area :body
     = f.submit t('.answer')

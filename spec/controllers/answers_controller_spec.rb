@@ -11,31 +11,27 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'creates a new answer' do
-        expect { post :create, params: {question_id: question, answer: attributes_for(:answer)} }.to change(Answer, :count).by(1)
+        expect { post :create, params: {question_id: question, answer: attributes_for(:answer)}, format: :js }.to change(Answer, :count).by(1)
       end
 
-      before { post :create, params: {question_id: question, answer: attributes_for(:answer)} }
+      before { post :create, params: {question_id: question, answer: attributes_for(:answer)}, format: :js }
 
       it 'creates a answer for question' do
         expect(assigns(:answer).question).to eq(question)
-      end
-
-      it 'redirects to question#show view' do
-        expect(response).to redirect_to(question)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not create the answer' do
         expect do
-          post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}
+          post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}, format: :js
         end.not_to change(Answer, :count)
       end
 
       it 'renders question/show template' do
-        post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}
+        post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}, format: :js
 
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
       end
     end
   end
@@ -48,13 +44,7 @@ RSpec.describe AnswersController, type: :controller do
       before { login(author) }
 
       it 'delete the answer' do
-        expect { delete :destroy, params: {id: answer} }.to change(Answer, :count).by(-1)
-      end
-
-      it 'redirect to index' do
-        delete :destroy, params: {id: answer}
-
-        expect(response).to redirect_to question_path(question)
+        expect { delete :destroy, params: {id: answer}, format: :js }.to change(Answer, :count).by(-1)
       end
     end
 
@@ -64,8 +54,23 @@ RSpec.describe AnswersController, type: :controller do
       before { login(not_author) }
 
       it 'not delete the answer' do
-        expect { delete :destroy, params: {id: answer} }.not_to change(Answer, :count)
+        expect { delete :destroy, params: {id: answer}, format: :js }.not_to change(Answer, :count)
       end
+    end
+  end
+
+  describe 'POST #best' do
+    let(:users_question) { create(:question, author: user) }
+    let(:answers) { create_list(:answer, 5) }
+
+    before { login(user) }
+
+    it 'marks answer as best' do
+      target_answer = answers.sample
+      
+      post :best, params: {id: target_answer}, format: :js
+      
+      expect(assigns(:answer)).to be_best
     end
   end
 end

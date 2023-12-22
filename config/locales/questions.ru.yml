@@ -4,6 +4,7 @@ ru:
       success: "Вопрос успешно создан."
     show:
       answer: "Ответить"
+      question_update: "Обновить Вопрос"
     destroy:
       success: "Вопрос был успешно удален."
       fail:
@@ -13,3 +14,5 @@ ru:
     question:
       delete: "Удалить вопрос"
       edit: "Изменить вопрос"
+    new:
+      ask: "Спросить"

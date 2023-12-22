@@ -7,6 +7,7 @@ en:
       save: "Save"
       edit: "Edit"
       answered: "answered %{at}"
+      mark_best: "Mark as best"
     destroy:
       delete:
         success: "Answer was successfully deleted."

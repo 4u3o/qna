@@ -2,7 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_answer, only: %i[destroy update]
+  before_action :set_answer, only: %i[destroy update best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -27,6 +27,10 @@ class AnswersController < ApplicationController
     end
   end
 
+  def best
+    @answer.mark_best
+    @answers = @answer.question.answers.sort_by_best
+  end
 
   private
 
