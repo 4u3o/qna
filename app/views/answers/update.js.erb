@@ -1,0 +1,5 @@
+$('.answer-update-errors').html('<%= render 'partials/errors', resource: @answer %>');
+
+<% if @answer.errors.empty? %>
+  $('.answers').html('<%= j render @question.answers %>');
+<% end %>

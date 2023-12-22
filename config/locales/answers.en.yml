@@ -4,6 +4,10 @@ en:
       success: "Answer was successfully created"
     answer:
       delete: "Delete answer"
+      save: "Save"
+      edit: "Edit"
+      answered: "answered %{at}"
+      mark_best: "Mark as best"
     destroy:
       delete:
         success: "Answer was successfully deleted."

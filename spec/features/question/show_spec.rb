@@ -4,7 +4,7 @@ require 'rails_helper'
 
 feature 'Showing question and answers' do
   given(:question) { create(:question) }
-  given(:answers) { create_list(:answer, 3, question:) }
+  given!(:answers) { create_list(:answer, 3, question:) }
 
   background { visit question_path(question) }
 

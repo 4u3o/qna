@@ -1,0 +1,3 @@
+$('.flash').html('<%= render 'partials/flash' %>')
+$('.answer-errors').html('<%= render 'partials/errors', resource: @answer %>');
+$('.answers').html('<%= j render @question.answers %>')

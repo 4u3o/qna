@@ -18,9 +18,9 @@ feature 'User can create question', "
     end
 
     scenario 'asks a question' do
-      fill_in 'Title', with: 'Test question'
-      fill_in 'Body', with: 'text text text'
-      click_on 'Ask'
+      fill_in Question.human_attribute_name(:title), with: 'Test question'
+      fill_in Question.human_attribute_name(:body), with: 'text text text'
+      click_on ask_button
 
       expect(page).to have_content 'Your question successfully created.'
       expect(page).to have_content 'Test question'
@@ -28,7 +28,7 @@ feature 'User can create question', "
     end
 
     scenario 'asks a question with errors' do
-      click_on 'Ask'
+      click_on ask_button
 
       expect(page).to have_content "Title can't be blank"
     end
@@ -36,8 +36,14 @@ feature 'User can create question', "
 
   scenario 'Unauthenticated user tries to ask a question' do
     visit questions_path
-    click_on 'Ask question'
+    click_on ask_button
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
+
+  private
+
+  def ask_button
+    I18n.t('questions.new.ask')
   end
 end

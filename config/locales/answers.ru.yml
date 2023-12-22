@@ -4,6 +4,10 @@ ru:
       success: "Ответ успешно создан"
     answer:
       delete: "Удалить ответ"
+      save: "Сохранить"
+      edit: "Изменить"
+      answered: "отвечен %{at}"
+      mark_best: "Отметить лучшим"
     destroy:
       delete:
         success: "Ответ был успешно удален."

@@ -2,9 +2,15 @@ en:
   questions:
     show:
       answer: "Answer"
-      delete_button: "Delete question"
+      question_update: "Update Question"
+    question:
+      delete: "Delete question"
+      edit: "Edit question"
     destroy:
-      delete:
-        success: "Question was successfully deleted."
-        fail:
-          not_author: "You are not an author."
+      success: "Question was successfully deleted."
+      fail:
+        not_author: "You are not an author."
+    update:
+      success: "Your question was successfully updated"
+    new:
+      ask: "Ask"

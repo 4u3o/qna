@@ -4,9 +4,15 @@ ru:
       success: "Вопрос успешно создан."
     show:
       answer: "Ответить"
-      delete_button: "Удалить вопрос"
+      question_update: "Обновить Вопрос"
     destroy:
-      delete:
-        success: "Вопрос был успешно удален."
-        fail:
-          not_author: "Вы не автор этого вопроса."
+      success: "Вопрос был успешно удален."
+      fail:
+        not_author: "Вы не автор этого вопроса."
+    update:
+      success: "Ваш вопрос был обновлен"
+    question:
+      delete: "Удалить вопрос"
+      edit: "Изменить вопрос"
+    new:
+      ask: "Спросить"

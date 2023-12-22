@@ -6,7 +6,7 @@ feature 'Creating answer for question' do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  context 'when User is authenticated' do
+  context 'when User is authenticated', js: true do
     background do
       sign_in(user)
 
@@ -14,16 +14,19 @@ feature 'Creating answer for question' do
     end
 
     scenario 'he writes an answer' do
-      fill_in 'Body', with: 'My answer'
+      fill_in 'Your answer', with: 'My answer'
       click_button answer
 
-      expect(page).to have_content 'My answer'
+      expect(page).to have_current_path(question_path(question))
+      within '.answers' do
+        expect(page).to have_content 'My answer'
+      end
     end
 
     scenario 'he sends empty body' do
       click_button answer
 
-      expect(page).to have_content "Body can't be blank"
+      expect(page).to have_content blank_answer_error
     end
   end
 
@@ -39,5 +42,9 @@ feature 'Creating answer for question' do
 
   def answer
     I18n.t('questions.show.answer')
+  end
+
+  def blank_answer_error
+    "#{Answer.human_attribute_name(:body)} can't be blank"
   end
 end

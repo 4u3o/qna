@@ -1,5 +1,17 @@
 - if answer.persisted?
-  p= answer.body
+  .answer
+    p= answer.body
+    p= t('.answered', at: dt_format(answer.created_at))
+    - if current_user&.author?(answer.question)
+      = link_to t('.mark_best'), best_answer_path(answer),  method:  :post, remote: true
 
-  - if current_user&.author?(answer)
-    = link_to t('.delete'), answer_path(answer), method: :delete
+    - if current_user&.author?(answer)
+      = link_to t('.delete'), answer_path(answer),  method:  :delete, remote: true
+      = link_to t('.edit'), '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+      .answer-update-errors
+
+      = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"}, local: false do |f|
+        = f.label :body
+        = f.text_area :body
+        = f.submit t('.save')
