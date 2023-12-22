@@ -28,6 +28,8 @@ class AnswersController < ApplicationController
   end
 
   def best
+    return unless current_user&.author?(@answer.question)
+
     @answer.mark_best
     @answers = @answer.question.answers.sort_by_best
   end

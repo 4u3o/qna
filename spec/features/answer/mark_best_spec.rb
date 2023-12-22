@@ -21,6 +21,17 @@ feature 'User can mark answer as best' do
         expect(answers.first).to have_content target_answer.body
       end
     end
+
+    context 'when he is not question answer' do
+      given(:new_user) { create(:user) }
+
+      scenario 'he can not see mark button' do
+        sign_in(new_user)
+        visit question_path(question)
+
+        expect(page).to_not have_link mark_best
+      end
+    end
   end
 
   private

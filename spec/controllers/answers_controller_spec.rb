@@ -60,17 +60,30 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #best' do
-    let(:users_question) { create(:question, author: user) }
-    let(:answers) { create_list(:answer, 5) }
+    let(:user_question) { create(:question, author: user) }
+    let(:answers) { create_list(:answer, 5, question: user_question) }
+    let(:target_answer) { answers.sample }
 
-    before { login(user) }
+    context 'when user is question author' do
+      before { login(user) }
 
-    it 'marks answer as best' do
-      target_answer = answers.sample
-      
-      post :best, params: {id: target_answer}, format: :js
-      
-      expect(assigns(:answer)).to be_best
+      it 'marks answer as best' do
+        post :best, params: {id: target_answer}, format: :js
+
+        expect(assigns(:answer)).to be_best
+      end
+    end
+
+    context 'when user is not question author' do
+      let(:new_user) { create(:user) }
+
+      before { login(new_user) }
+
+      it 'not marks answer as best' do
+        post :best, params: {id: target_answer}, format: :js
+
+        expect(assigns(:answer)).to_not be_best
+      end
     end
   end
 end
